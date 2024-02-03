@@ -1,0 +1,14 @@
+version: "1"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+
+  backend:
+    image: backend
+    ports:
+      - "21200:8080"
