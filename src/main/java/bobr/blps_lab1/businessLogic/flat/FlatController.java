@@ -11,18 +11,23 @@ import java.util.List;
 public class FlatController {
     private final FlatService flatService;
 
+    @GetMapping("/{flatId}")
+    public Flat getFlat(@PathVariable Integer flatId) {
+        return flatService.find(flatId);
+    }
+
     @GetMapping
     public List<Flat> getFlats() {
         return flatService.findAll();
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public Boolean add(@RequestBody Flat flat) {
         flatService.save(flat);
         return true;
     }
 
-    @DeleteMapping("/remove/{flatId}")
+    @DeleteMapping("/{flatId}")
     public void removeFlat(@PathVariable Integer flatId) {
         flatService.delete(flatId);
     }

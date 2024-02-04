@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/postgres # for local machine: jdbc:postgresql://db:5432/postgres
-    username: postgres
-    password: qwerty
+    url: jdbc:postgresql://pg:5432/studs
+    username: s339795
+    password: FH91Ze1WDQJk6Oed
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -16,5 +16,8 @@ spring:
   sql:
     init:
       mode: always
+
+server:
+  port: 21200
 
 JWT_SECRET_KEY: "6A576E5A7234753778214125442A472D4B6150645267556B703273357638792F"

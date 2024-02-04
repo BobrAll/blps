@@ -1,8 +1,6 @@
 FROM openjdk:17
 LABEL authors="Bobrus Alexander"
 
-EXPOSE 8080
-
 COPY . /java
 WORKDIR /java
 

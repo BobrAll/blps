@@ -12,6 +12,10 @@ import java.util.List;
 public class FlatService {
     private final FlatRepository flatRepository;
 
+    public Flat find(Integer chatId) {
+        return flatRepository.findById(chatId).orElseThrow();
+    }
+
     public List<Flat> findAll() {
         return flatRepository.findAll();
     }
