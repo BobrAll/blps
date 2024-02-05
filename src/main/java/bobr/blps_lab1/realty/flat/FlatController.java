@@ -1,4 +1,4 @@
-package bobr.blps_lab1.businessLogic.flat;
+package bobr.blps_lab1.realty.flat;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -11,20 +11,19 @@ import java.util.List;
 public class FlatController {
     private final FlatService flatService;
 
-    @GetMapping("/{flatId}")
-    public Flat getFlat(@PathVariable Integer flatId) {
-        return flatService.find(flatId);
-    }
-
     @GetMapping
     public List<Flat> getFlats() {
         return flatService.findAll();
     }
 
     @PostMapping()
-    public Boolean add(@RequestBody Flat flat) {
+    public void add(@RequestBody Flat flat) {
         flatService.save(flat);
-        return true;
+    }
+
+    @GetMapping("/{flatId}")
+    public Flat getFlat(@PathVariable Integer flatId) {
+        return flatService.find(flatId);
     }
 
     @DeleteMapping("/{flatId}")

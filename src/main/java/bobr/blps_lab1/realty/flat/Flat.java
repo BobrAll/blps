@@ -1,6 +1,6 @@
-package bobr.blps_lab1.businessLogic.flat;
+package bobr.blps_lab1.realty.flat;
 
-import bobr.blps_lab1.businessLogic.realty.Realty;
+import bobr.blps_lab1.realty.Realty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Data;

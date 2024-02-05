@@ -1,5 +1,6 @@
-package bobr.blps_lab1.businessLogic.flat;
+package bobr.blps_lab1.realty.flat;
 
+import bobr.blps_lab1.exceptions.flat.NoSuchFlatException;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,10 @@ import java.util.List;
 public class FlatService {
     private final FlatRepository flatRepository;
 
-    public Flat find(Integer chatId) {
-        return flatRepository.findById(chatId).orElseThrow();
+    public Flat find(Integer flatId) {
+        return flatRepository
+                .findById(flatId)
+                .orElseThrow(() -> new NoSuchFlatException(flatId));
     }
 
     public List<Flat> findAll() {
@@ -24,7 +27,7 @@ public class FlatService {
         flatRepository.save(flat);
     }
 
-    public void delete(Integer id) {
-        flatRepository.deleteById(id);
+    public void delete(Integer flatId) {
+        flatRepository.delete(find(flatId));
     }
 }

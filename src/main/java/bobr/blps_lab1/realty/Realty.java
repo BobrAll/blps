@@ -1,4 +1,4 @@
-package bobr.blps_lab1.businessLogic.realty;
+package bobr.blps_lab1.realty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
