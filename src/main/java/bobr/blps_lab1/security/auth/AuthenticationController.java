@@ -14,7 +14,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;
 
-    @GetMapping("/signIn")
+    @PostMapping("/signUp")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authenticationService.register(request));
+    }
+
+    @PostMapping("/signIn")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
@@ -26,10 +31,5 @@ public class AuthenticationController {
         jwtService.delete(jwt);
 
         return ResponseEntity.ok("Token has been removed successfully");
-    }
-
-    @PostMapping("/signUp")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request));
     }
 }
