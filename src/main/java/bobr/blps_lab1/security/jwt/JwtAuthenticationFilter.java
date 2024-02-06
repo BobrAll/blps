@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        jwt = authHeader.substring(7);
+        jwt = jwtService.extractJwtFromHeader(authHeader);
         userId = Integer.valueOf(jwtService.extractId(jwt));
 
         if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {

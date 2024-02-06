@@ -1,5 +1,6 @@
 package bobr.blps_lab1.security.jwt;
 
+import bobr.blps_lab1.exceptions.jwt.JwtNotFoundException;
 import bobr.blps_lab1.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -51,11 +52,11 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token) {
-        return isTokenExists(token) && !isTokenExpired(token);
+        return findJwtByToken(token) != null && !isTokenExpired(token);
     }
 
-    public boolean isTokenExists(String token) {
-        return jwtRepository.findJwtByToken(token).isPresent();
+    public Jwt findJwtByToken(String token) {
+        return jwtRepository.findJwtByToken(token).orElseThrow(() -> new JwtNotFoundException());
     }
 
     private boolean isTokenExpired(String token) {
@@ -77,6 +78,17 @@ public class JwtService {
 
     public void save(String token) {
         jwtRepository.save(new Jwt.JwtBuilder().token(token).build());
+    }
+
+    public void delete(String token) {
+        Jwt jwt = findJwtByToken(token);
+        jwtRepository.delete(jwt);
+    }
+
+    public String extractJwtFromHeader(String header) {
+        int prefix = "Bearer ".length();
+
+        return header.substring(prefix);
     }
 
     private Key getSignInKey() {
