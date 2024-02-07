@@ -19,8 +19,19 @@ public class FlatService {
                 .orElseThrow(() -> new NoSuchFlatException(flatId));
     }
 
-    public List<Flat> findAll() {
-        return flatRepository.findAll();
+    public List<Flat> findAllByFilters(FlatCriteria searchFilters) {
+        return flatRepository.findWithFilters(
+                searchFilters.getMinTotalArea(),
+                searchFilters.getMaxTotalArea(),
+                searchFilters.getMinKitchenArea(),
+                searchFilters.getMaxKitchenArea(),
+                searchFilters.getMinLivingArea(),
+                searchFilters.getMaxLivingArea(),
+                searchFilters.getRooms(),
+                searchFilters.getFloor(),
+                searchFilters.getHaveBalcony(),
+                searchFilters.getIsApartments()
+                );
     }
 
     public void save(Flat flat) {
