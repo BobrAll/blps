@@ -1,6 +1,8 @@
 package bobr.blps_lab1.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,5 +26,10 @@ public class UserService {
 
     public void save(User user) {
         repository.save(user);
+    }
+
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return findByLogin(auth.getName()).orElseThrow();
     }
 }

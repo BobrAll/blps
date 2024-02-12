@@ -4,9 +4,11 @@ services:
   pg:
     image: postgres:15
     environment:
-      POSTGRES_DB: XXXX
-      POSTGRES_USER: XXXX
-      POSTGRES_PASSWORD: XXXX
+      POSTGRES_DB: studs
+      POSTGRES_USER: s339795
+      POSTGRES_PASSWORD: FH91Ze1WDQJk6Oed
+    ports:
+      - "5432:5432"
 
   backend:
     image: backend
