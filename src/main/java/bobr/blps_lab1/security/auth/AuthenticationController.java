@@ -1,6 +1,8 @@
 package bobr.blps_lab1.security.auth;
 
 import bobr.blps_lab1.security.jwt.JwtService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "User")
 @RequiredArgsConstructor
 public class AuthenticationController {
 

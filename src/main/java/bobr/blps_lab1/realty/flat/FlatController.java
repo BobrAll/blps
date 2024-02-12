@@ -1,5 +1,6 @@
 package bobr.blps_lab1.realty.flat;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Flat")
 @RequestMapping("/api/v1/flats")
 public class FlatController {
     private final FlatService flatService;
