@@ -28,6 +28,22 @@ public class UserService {
         repository.save(user);
     }
 
+    public void delete(Integer userId) {
+        repository.deleteById(userId);
+    }
+
+    public void block(Integer userId) {
+        User user = findById(userId).orElseThrow();
+        user.disable();
+        save(user);
+    }
+
+    public void unblock(Integer userId) {
+        User user = findById(userId).orElseThrow();
+        user.enable();
+        save(user);
+    }
+
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return findByLogin(auth.getName()).orElseThrow();

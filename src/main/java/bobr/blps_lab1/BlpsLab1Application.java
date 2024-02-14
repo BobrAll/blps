@@ -22,7 +22,9 @@ public class BlpsLab1Application {
                 .login("admin")
                 .password(passwordEncoder.encode("admin"))
                 .role(Role.ADMIN)
-                .build());
+                .enabled(true)
+                .build()
+        );
     }
 
 }
