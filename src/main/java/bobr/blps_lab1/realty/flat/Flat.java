@@ -10,6 +10,9 @@ import lombok.Data;
 @Entity
 @Table(name = "flat")
 public class Flat extends Realty {
+    @Column(nullable = false)
+    private Integer ownerId;
+    private Boolean isBusted;
     private Boolean haveBalcony;
     private Boolean isApartments;
     private Double kitchenArea;

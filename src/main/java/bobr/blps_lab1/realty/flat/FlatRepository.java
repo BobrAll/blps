@@ -30,4 +30,6 @@ public interface FlatRepository extends JpaRepository<Flat, Integer> {
             Boolean haveBalcony,
             Boolean isApartments
             );
+
+    List<Flat> findAllByOwnerId(Integer ownerId);
 }

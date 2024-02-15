@@ -2,6 +2,7 @@ package bobr.blps_lab1.user;
 
 import bobr.blps_lab1.exceptions.user.AlreadyHaveSuperuserPermissionsException;
 import bobr.blps_lab1.exceptions.user.UserNotSubscribedException;
+import bobr.blps_lab1.realty.flat.FlatService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,7 @@ import static java.util.stream.Collectors.groupingBy;
 @RequiredArgsConstructor
 @Tag(name = "Subscription")
 public class SubscriptionController {
+    private final FlatService flatService;
     private final UserService userService;
 
     @PostMapping
@@ -43,6 +45,7 @@ public class SubscriptionController {
 
         if (user.getRole().equals(Role.SUPERUSER)) {
             user.setRole(Role.USER);
+            flatService.cutbackAllFlats(user.getId());
             userService.save(user);
         }
         else

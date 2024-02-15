@@ -15,7 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -40,12 +40,19 @@ public class SecurityConfiguration {
                         ).permitAll()
 
 
-                        .requestMatchers("/api/v1/users/{userId}/block")
+                        .requestMatchers(PUT, "/api/v1/users/{userId}/block")
                         .hasAuthority("user.block")
-                        .requestMatchers("/api/v1/users/{userId}/unblock")
+                        .requestMatchers(PUT, "/api/v1/users/{userId}/unblock")
                         .hasAuthority("user.unblock")
                         .requestMatchers(DELETE, "/api/v1/users/{userId}")
                         .hasAuthority("user.delete")
+
+                        .requestMatchers(POST, "/api/v1/flats")
+                        .hasAuthority("flat.add")
+                        .requestMatchers(DELETE, "/api/v1/flats/{flatId}")
+                        .hasAuthority("flat.delete")
+                        .requestMatchers(PUT, "/api/v1/flats/{flatId}/boost")
+                        .hasAuthority("flat.boost")
 
                         .anyRequest().authenticated()
                 )

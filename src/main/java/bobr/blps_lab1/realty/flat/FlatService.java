@@ -13,7 +13,7 @@ import java.util.List;
 public class FlatService {
     private final FlatRepository flatRepository;
 
-    public Flat find(Integer flatId) {
+    public Flat findById(Integer flatId) {
         return flatRepository
                 .findById(flatId)
                 .orElseThrow(() -> new NoSuchFlatException(flatId));
@@ -39,6 +39,21 @@ public class FlatService {
     }
 
     public void delete(Integer flatId) {
-        flatRepository.delete(find(flatId));
+        flatRepository.delete(findById(flatId));
+    }
+
+    public void boost(Integer flatId) {
+        Flat flat = findById(flatId);
+
+        flat.setIsBusted(true);
+        save(flat);
+    }
+
+
+    public void cutbackAllFlats(Integer userId) {
+        List<Flat> flats = flatRepository.findAllByOwnerId(userId);
+
+        flats.forEach(flat -> flat.setIsBusted(false));
+        flatRepository.saveAll(flats);
     }
 }

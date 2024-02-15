@@ -12,11 +12,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @DeleteMapping("/{userId}")
-    public void delete(@PathVariable Integer userId) {
-        userService.delete(userId);
-    }
-
     @PutMapping("/{userId}/block")
     public void block(@PathVariable Integer userId) {
         userService.block(userId);
@@ -25,5 +20,10 @@ public class UserController {
     @PutMapping("/{userId}/unblock")
     public void unblock(@PathVariable Integer userId) {
         userService.unblock(userId);
+    }
+
+    @DeleteMapping("/{userId}")
+    public void delete(@PathVariable Integer userId) {
+        userService.delete(userId);
     }
 }
