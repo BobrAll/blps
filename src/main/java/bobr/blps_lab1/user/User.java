@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +18,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Entity
 @Table(name = "_user")
+@DynamicInsert
 public class User implements UserDetails {
     @Id
     @GeneratedValue
@@ -29,7 +32,9 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private Boolean enabled = true;
+    private Boolean enabled;
+    @ColumnDefault("0")
+    private Double usdBalance;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

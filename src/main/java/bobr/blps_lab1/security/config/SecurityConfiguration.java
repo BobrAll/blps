@@ -46,6 +46,8 @@ public class SecurityConfiguration {
                         .hasAuthority("user.unblock")
                         .requestMatchers(DELETE, "/api/v1/users/{userId}")
                         .hasAuthority("user.delete")
+                        .requestMatchers(PUT, "/api/v1/users/{userId}/addBalance/{usdVal}")
+                        .hasAuthority("user.addBalance")
 
                         .requestMatchers(POST, "/api/v1/flats")
                         .hasAuthority("flat.add")

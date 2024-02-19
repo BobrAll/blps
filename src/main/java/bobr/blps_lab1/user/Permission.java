@@ -11,7 +11,8 @@ public enum Permission {
 
     USER_BlOCK("user.block"),
     USER_UNBLOCK("user.unblock"),
-    USER_DELETE("user.delete");
+    USER_DELETE("user.delete"),
+    USER_ADD_BALANCE("user.addBalance");
 
     @Getter
     private final String permission;

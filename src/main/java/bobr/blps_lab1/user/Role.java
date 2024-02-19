@@ -26,7 +26,8 @@ public enum Role {
 
             USER_BlOCK,
             USER_UNBLOCK,
-            USER_DELETE
+            USER_DELETE,
+            USER_ADD_BALANCE
     ));
 
     @Getter

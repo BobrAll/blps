@@ -20,17 +20,7 @@ public class SubscriptionController {
 
     @PostMapping
     void buySubscription() {
-        User user = userService.getCurrentUser();
-
-        if (user
-                .getAuthorities()
-                .containsAll(Role.SUPERUSER.getAuthorities())
-        ) {
-            throw new AlreadyHaveSuperuserPermissionsException();
-        } else {
-            user.setRole(Role.SUPERUSER);
-            userService.save(user);
-        }
+        userService.buySubscription(userService.getCurrentUser());
     }
 
     @DeleteMapping

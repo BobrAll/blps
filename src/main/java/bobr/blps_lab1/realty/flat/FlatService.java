@@ -45,7 +45,7 @@ public class FlatService {
     public void boost(Integer flatId) {
         Flat flat = findById(flatId);
 
-        flat.setIsBusted(true);
+        flat.setIsBoosted(true);
         save(flat);
     }
 
@@ -53,7 +53,7 @@ public class FlatService {
     public void unboostAllFlats(Integer userId) {
         List<Flat> flats = flatRepository.findAllByOwnerId(userId);
 
-        flats.forEach(flat -> flat.setIsBusted(false));
+        flats.forEach(flat -> flat.setIsBoosted(false));
         flatRepository.saveAll(flats);
     }
 

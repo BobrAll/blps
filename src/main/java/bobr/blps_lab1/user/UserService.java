@@ -1,15 +1,21 @@
 package bobr.blps_lab1.user;
 
+import bobr.blps_lab1.exceptions.user.AlreadyHaveSuperuserPermissionsException;
+import bobr.blps_lab1.exceptions.user.NotEnoughMoneyException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    @Value("${SUBSCRIPTION_PRICE}")
+    private Double subPrice;
     private final UserRepository repository;
 
     public Optional<User> findByEmail(String email) {
@@ -47,5 +53,24 @@ public class UserService {
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return findByLogin(auth.getName()).orElseThrow();
+    }
+
+    @Transactional
+    public void buySubscription(User user) {
+        if (user
+                .getAuthorities()
+                .containsAll(Role.SUPERUSER.getAuthorities())
+        ) {
+            throw new AlreadyHaveSuperuserPermissionsException();
+        } else {
+            if (user.getUsdBalance() < subPrice) {
+                throw new NotEnoughMoneyException("You haven't enough money to buy subscription");
+            }
+            else {
+                user.setUsdBalance(user.getUsdBalance() - subPrice);
+            }
+            user.setRole(Role.SUPERUSER);
+            save(user);
+        }
     }
 }

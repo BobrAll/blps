@@ -5,6 +5,7 @@ import bobr.blps_lab1.user.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +24,16 @@ public class FlatController {
     }
 
     @PostMapping()
+    @Transactional
     public void add(@RequestBody Flat flat) {
         User user = userService.getCurrentUser();
 
         flat.setOwnerId(user.getId());
         flatService.save(flat);
+
+        if (flat.getIsBoosted() && !user.getAuthorities().contains("flat.boost")) {
+            userService.buySubscription(user);
+        }
     }
 
     @GetMapping("/{flatId}")

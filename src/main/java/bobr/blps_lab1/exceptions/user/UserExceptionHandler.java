@@ -11,7 +11,8 @@ public class UserExceptionHandler {
 
     @ExceptionHandler(value = {
             AlreadyHaveSuperuserPermissionsException.class,
-            UserNotSubscribedException.class
+            UserNotSubscribedException.class,
+            NotEnoughMoneyException.class
     })
     public ResponseEntity<Object> handleSuperuserExceptions(
             RuntimeException e) {
