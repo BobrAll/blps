@@ -32,4 +32,7 @@ public interface FlatRepository extends JpaRepository<Flat, Integer> {
             );
 
     List<Flat> findAllByOwnerId(Integer ownerId);
+
+    @Query("SELECT f.ownerId FROM Flat f WHERE f.id = :flatId")
+    Integer findOwnerIdByFlatId(Integer flatId);
 }

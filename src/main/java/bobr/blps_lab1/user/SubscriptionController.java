@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.List;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 @RestController
 @RequestMapping("/api/v1/subscription")
 @RequiredArgsConstructor
@@ -45,10 +39,9 @@ public class SubscriptionController {
 
         if (user.getRole().equals(Role.SUPERUSER)) {
             user.setRole(Role.USER);
-            flatService.cutbackAllFlats(user.getId());
+            flatService.unboostAllFlats(user.getId());
             userService.save(user);
-        }
-        else
+        } else
             throw new UserNotSubscribedException();
     }
 }

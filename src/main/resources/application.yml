@@ -4,6 +4,7 @@ spring:
     username: s339795
     password: FH91Ze1WDQJk6Oed
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -13,9 +14,11 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
   sql:
     init:
       mode: always
+
 
 server:
   port: 21200

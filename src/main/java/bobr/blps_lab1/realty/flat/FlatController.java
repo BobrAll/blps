@@ -4,8 +4,7 @@ import bobr.blps_lab1.user.User;
 import bobr.blps_lab1.user.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,8 +36,21 @@ public class FlatController {
     }
 
     @DeleteMapping("/{flatId}")
-    public void removeFlat(@PathVariable Integer flatId) {
-        flatService.delete(flatId);
+    public ResponseEntity removeFlat(@PathVariable Integer flatId) {
+        User currentUser = userService.getCurrentUser();
+
+        if (
+                flatService
+                        .findOwnerIdByFlatId(flatId)
+                        .equals(currentUser.getId()) ||
+                        currentUser
+                                .getAuthorities()
+                                .contains("flat.delete")
+        ) {
+            flatService.delete(flatId);
+            return ResponseEntity.ok().build();
+        } else
+            return ResponseEntity.status(403).build();
     }
 
     @PutMapping("/{flatId}/boost")

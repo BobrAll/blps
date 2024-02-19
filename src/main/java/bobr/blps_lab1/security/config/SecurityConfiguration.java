@@ -49,8 +49,6 @@ public class SecurityConfiguration {
 
                         .requestMatchers(POST, "/api/v1/flats")
                         .hasAuthority("flat.add")
-                        .requestMatchers(DELETE, "/api/v1/flats/{flatId}")
-                        .hasAuthority("flat.delete")
                         .requestMatchers(PUT, "/api/v1/flats/{flatId}/boost")
                         .hasAuthority("flat.boost")
 

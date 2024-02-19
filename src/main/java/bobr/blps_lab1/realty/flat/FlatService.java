@@ -50,10 +50,14 @@ public class FlatService {
     }
 
 
-    public void cutbackAllFlats(Integer userId) {
+    public void unboostAllFlats(Integer userId) {
         List<Flat> flats = flatRepository.findAllByOwnerId(userId);
 
         flats.forEach(flat -> flat.setIsBusted(false));
         flatRepository.saveAll(flats);
+    }
+
+    public Integer findOwnerIdByFlatId(Integer flatId) {
+        return flatRepository.findOwnerIdByFlatId(flatId);
     }
 }
