@@ -1,13 +1,24 @@
 package bobr.blps_lab1.realty.flat;
 
+import bobr.blps_lab1.image.Base64Image;
 import bobr.blps_lab1.realty.Realty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+import java.util.List;
+
 
 @Data
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Flat extends Realty {
+    @OneToMany(mappedBy = "flat", cascade = CascadeType.ALL)
+    private List<Base64Image> base64images;
     @Column(nullable = false)
     private Integer ownerId;
     private Boolean isBoosted;
