@@ -17,24 +17,6 @@ import java.util.List;
 public class Base64ImageService {
     private final ImageRepository imageRepository;
 
-    public static Base64Image download(String url, Integer flatId) {
-        byte[] imageBytes = new byte[0];
-        String imgExtension = url.substring(url.length() - 3);
-
-        try {
-            BufferedImage image = ImageIO.read(new URL(url));
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-            ImageIO.write(image, imgExtension, out);
-            imageBytes = out.toByteArray();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-        return new Base64Image(base64Image, flatId);
-    }
-
     public static byte[] toByteImage(Base64Image img) {
         try {
             byte[] imageBytes = Base64.getDecoder().decode(img.getBase64Image());
@@ -48,10 +30,6 @@ public class Base64ImageService {
             System.out.println(e.getMessage());
         }
         return null;
-    }
-
-    public Base64Image save(Base64Image image) {
-        return imageRepository.save(image);
     }
 
     public List<Base64Image> findAllByFlatId(Integer flatId) {

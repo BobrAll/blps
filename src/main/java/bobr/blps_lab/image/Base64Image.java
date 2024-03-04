@@ -23,9 +23,4 @@ public class Base64Image {
 
     @Column(columnDefinition = "TEXT")
     private String base64Image;
-
-    public Base64Image(String base64Image, Integer flatId) {
-        this.base64Image = base64Image;
-        this.flatId = flatId;
-    }
 }
