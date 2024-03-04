@@ -1,8 +1,6 @@
 package bobr.blps_lab.image;
 
-import bobr.blps_lab.realty.flat.Flat;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -19,7 +17,7 @@ import java.util.List;
 public class Base64ImageService {
     private final ImageRepository imageRepository;
 
-    public static Base64Image download(String url, Flat flat) {
+    public static Base64Image download(String url, Integer flatId) {
         byte[] imageBytes = new byte[0];
         String imgExtension = url.substring(url.length() - 3);
 
@@ -34,7 +32,7 @@ public class Base64ImageService {
         }
 
         String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-        return new Base64Image(base64Image, flat);
+        return new Base64Image(base64Image, flatId);
     }
 
     public static byte[] toByteImage(Base64Image img) {
@@ -52,7 +50,6 @@ public class Base64ImageService {
         return null;
     }
 
-//    @Async
     public Base64Image save(Base64Image image) {
         return imageRepository.save(image);
     }

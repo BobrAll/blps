@@ -35,9 +35,11 @@ public class FlatController {
         User user = userService.getCurrentUser();
 
         flatRequest.setOwnerId(user.getId());
-        flatService.save(flatService.toFlat(flatRequest));
+        flatService.save(flatRequest);
 
-        if (flatRequest.getIsBoosted() && !user.getAuthorities().contains("flat.boost")) {
+        if (flatRequest.getIsBoosted() &&
+                !user.getAuthorities().stream().anyMatch(a -> a.toString().equals("flat.boost"))) {
+
             userService.buySubscription(user);
         }
     }

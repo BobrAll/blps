@@ -1,7 +1,11 @@
 package bobr.blps_lab.realty.flat;
 
+import bobr.blps_lab.config.MqttConfig;
 import bobr.blps_lab.exceptions.flat.NoSuchFlatException;
 import bobr.blps_lab.image.Base64ImageService;
+import bobr.blps_lab.image.DownloadImageRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -13,6 +17,7 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 public class FlatService {
+    private final MqttConfig.MQTTGateway mqttGateway;
     private final Base64ImageService imageService;
     private final FlatRepository flatRepository;
 
@@ -64,7 +69,9 @@ public class FlatService {
         return flatRepository.findOwnerIdByFlatId(flatId);
     }
 
-    public Flat toFlat(FlatAddRequest flatRequest) {
+    public Flat save(FlatAddRequest flatRequest) {
+        ObjectMapper jsonMapper = new ObjectMapper();
+
         Flat flat = Flat.builder()
                 .totalArea(flatRequest.getTotalArea())
                 .totalPrice(flatRequest.getTotalPrice())
@@ -79,12 +86,20 @@ public class FlatService {
                 .floor(flatRequest.getFloor())
                 .build();
 
-        if (flatRequest.getImageUrls() != null)
-            flatRequest.getImageUrls()
-                    .forEach(url -> imageService.save(
-                            Base64ImageService.download(url, flat))
-                    );
+        flat = flatRepository.save(flat);
 
+        if (flatRequest.getImageUrls() != null) {
+            Flat finalFlat = flat;
+            flatRequest.getImageUrls()
+                    .forEach(url -> {
+                                try {
+                                    mqttGateway.sendToMqtt(jsonMapper.writeValueAsString(new DownloadImageRequest(url, finalFlat.getId())));
+                                } catch (JsonProcessingException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                    );
+        }
         return flat;
     }
 }

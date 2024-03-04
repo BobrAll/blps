@@ -1,7 +1,9 @@
 package bobr.blps_lab.image;
 
-import bobr.blps_lab.realty.flat.Flat;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,14 +19,13 @@ public class Base64Image {
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Flat flat;
+    private Integer flatId;
 
     @Column(columnDefinition = "TEXT")
     private String base64Image;
 
-    public Base64Image(String base64Image, Flat flat) {
+    public Base64Image(String base64Image, Integer flatId) {
         this.base64Image = base64Image;
-        this.flat = flat;
+        this.flatId = flatId;
     }
 }

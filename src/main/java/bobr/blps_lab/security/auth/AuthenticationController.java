@@ -1,5 +1,6 @@
 package bobr.blps_lab.security.auth;
 
+import bobr.blps_lab.config.MqttConfig;
 import bobr.blps_lab.security.jwt.JwtService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;
 

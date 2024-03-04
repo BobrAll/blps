@@ -24,6 +24,7 @@ public class MqttConfig {
         options.setServerURIs(new String[]{rabbitmqHost});
         options.setUserName("guest");
         options.setPassword("guest".toCharArray());
+        options.setMaxInflight(100);
 
         factory.setConnectionOptions(options);
 
@@ -41,30 +42,6 @@ public class MqttConfig {
         return messageHandler;
     }
 
-    /*
-        @Bean
-        public MessageChannel mqttOutboundChannel() {
-            return new DirectChannel();
-        }
-
-        @Bean
-        public IntegrationFlow mqttInFlow() {
-            return IntegrationFlow.from(mqttInbound())
-                    .transform(p -> p + ", received from MQTT")
-                    .handle(message -> System.out.println("MQTT Message received: " + message))
-                    .get();
-        }
-
-        @Bean
-        public MessageProducerSupport mqttInbound() {
-            MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter("javaMqqtClient",
-                    mqttClientFactory(), "#");
-            adapter.setCompletionTimeout(5000);
-            adapter.setConverter(new DefaultPahoMessageConverter());
-            adapter.setQos(1);
-            return adapter;
-        }
-    */
     @MessagingGateway(defaultRequestChannel = "mqttOutboundChannel")
     public interface MQTTGateway {
         void sendToMqtt(String data);
