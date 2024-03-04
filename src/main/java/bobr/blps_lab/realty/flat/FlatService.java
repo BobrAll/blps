@@ -4,6 +4,7 @@ import bobr.blps_lab.exceptions.flat.NoSuchFlatException;
 import bobr.blps_lab.image.Base64ImageService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -81,8 +82,8 @@ public class FlatService {
         if (flatRequest.getImageUrls() != null)
             flatRequest.getImageUrls()
                     .forEach(url -> imageService.save(
-                            Base64ImageService.download(url, flat)
-                    ));
+                            Base64ImageService.download(url, flat))
+                    );
 
         return flat;
     }

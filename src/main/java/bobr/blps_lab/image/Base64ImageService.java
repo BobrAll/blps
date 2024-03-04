@@ -2,6 +2,7 @@ package bobr.blps_lab.image;
 
 import bobr.blps_lab.realty.flat.Flat;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -51,6 +52,7 @@ public class Base64ImageService {
         return null;
     }
 
+//    @Async
     public Base64Image save(Base64Image image) {
         return imageRepository.save(image);
     }

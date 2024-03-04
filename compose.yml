@@ -14,3 +14,11 @@ services:
     image: backend
     ports:
       - "8080:21200"
+
+#  rabbitmq:
+#    hostname: rabbitmq
+#    image: rabbitmq:management
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#      - "1883:1883"

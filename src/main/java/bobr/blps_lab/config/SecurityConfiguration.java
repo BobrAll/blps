@@ -1,4 +1,4 @@
-package bobr.blps_lab.security.config;
+package bobr.blps_lab.config;
 
 import bobr.blps_lab.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
